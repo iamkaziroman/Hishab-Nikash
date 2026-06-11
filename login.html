@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hishab-Nikash Login</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="login-page">
+  <div class="login-shell">
+    <div class="login-panel glass-card">
+      <div class="hero-badge">Hishab-Nikash</div>
+      <h1>Welcome Back</h1>
+      <p>Secure access to your income, goals, and smarter spending insights.</p>
+      <form id="loginForm" class="login-form" autocomplete="off">
+        <label>
+          <span>Username</span>
+          <input id="username" type="text" placeholder="roman" required />
+        </label>
+        <label>
+          <span>Password</span>
+          <input id="password" type="password" placeholder="Enter password" required />
+        </label>
+        <button type="submit" class="btn-primary">Sign In</button>
+        <p class="hint">Use <strong>roman</strong> / <strong>djdjdj</strong></p>
+      </form>
+      <div id="loginError" class="alert hidden"></div>
+    </div>
+  </div>
+  <script>
+    const validUser = 'roman';
+    const validPassword = 'djdjdj';
+    const authKey = 'incomeTracker.authenticated';
+
+    function redirectIfAuthenticated() {
+      if (sessionStorage.getItem(authKey) === 'true') {
+        window.location.href = 'app.html';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      redirectIfAuthenticated();
+
+      const form = document.getElementById('loginForm');
+      const error = document.getElementById('loginError');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+
+        if (username === validUser && password === validPassword) {
+          sessionStorage.setItem(authKey, 'true');
+          window.location.href = 'app.html';
+          return;
+        }
+
+        error.textContent = 'Invalid credentials. Try again with roman / djdjdj.';
+        error.classList.remove('hidden');
+      });
+    });
+  </script>
+</body>
+</html>
